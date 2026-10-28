@@ -58,6 +58,7 @@ select{border-radius:10px}
 .opt.bad .l{color:var(--bad)}
 .note{margin-top:8px;font-size:.88rem;font-weight:600}
 .note.ok{color:var(--ok)}.note.bad{color:var(--bad)}
+.why{margin-top:8px;padding:10px 12px;border-radius:10px;background:var(--accent-soft);font-size:.9rem}
 .emptybox{text-align:center;padding:50px 20px;color:var(--muted)}
 .result{text-align:center;font-size:1.1rem}
 .hidden{display:none}
@@ -215,8 +216,150 @@ const MGMT = [
 ["h","Organization","Which is NOT a common characteristic of an organization?","Freedom from any structure","A distinct purpose","Composed of people","A deliberate structure"]
 ];
 
+/* Explanations: same order as MGMT above (one per question) */
+const EXPL = [
+/* ===== EASY ===== */
+"Management means coordinating and supervising the work of other people so that work is completed properly and organizational goals are achieved.",
+"Efficiency is doing things right: completing work with the minimum time, money, effort and resources, and avoiding waste.",
+"Effectiveness is doing the right thing: completing the right tasks to achieve the organization's goals.",
+"The notes list three types of managers: first-line, middle and top managers.",
+"The three types are first-line, middle and top managers. 'Last-line manager' is not one of them.",
+"First-line managers directly manage entry-level employees and supervise their daily work.",
+"Middle managers connect top managers with first-line managers and other departments, and help implement the plans made by top management.",
+"Top managers are responsible for the overall direction and success of the organization. They make important decisions and set major goals and strategies.",
+"Managers perform four main functions: planning, organizing, leading and controlling.",
+"The four functions are planning, organizing, leading and controlling. Selling is not one of them.",
+"Planning means deciding the organization's goals and determining how to achieve them.",
+"Organizing means arranging people, jobs and resources so that work is completed properly.",
+"Leading means working with and guiding people: motivating them, giving directions and communicating with them.",
+"Controlling means checking progress toward goals and taking corrective action when necessary.",
+"Managerial roles are divided into three categories: informational, interpersonal and decisional.",
+"The three categories are informational, interpersonal and decisional. There is no 'financial' category.",
+"The monitor collects useful information related to the organization and its work.",
+"The disseminator shares important information with people inside the organization.",
+"The spokesperson communicates information about the organization to people outside it.",
+"The figurehead performs formal, social and legal duties as a representative of the organization.",
+"The leader guides, motivates, selects and trains employees and helps them work toward organizational goals.",
+"The resource allocator decides how the organization's resources (money, employees, equipment and time) should be used.",
+"The negotiator discusses and agrees on terms that benefit the organization.",
+"The entrepreneur finds new ideas and starts projects to improve the organization.",
+"Technical skill is the knowledge and ability needed to perform a specific job or task.",
+"Human skill is the ability to work well with other people. It includes communication, cooperation, teamwork and understanding others.",
+"Conceptual skill is the ability to understand complex situations and see how different parts of an organization work together.",
+"An organization is a planned group of people who work together to achieve a specific purpose or goal.",
+"Every organization has a distinct purpose, is composed of people and has a deliberate structure. People are needed to perform its work.",
+"Adam Smith published The Wealth of Nations in 1776 and supported the division of labour.",
+"Division of labour means dividing a job into smaller tasks and assigning them to different workers. This increases productivity and efficiency.",
+"Frederick Winslow Taylor is known as the father of scientific management. He published his principles in 1911.",
+"Ancient Egypt used management practices to build the pyramids.",
+"China used management practices to build the Great Wall.",
+"The Industrial Revolution took place from 1750 to 1850, when machines began to replace human labour in many tasks.",
+"Henri Fayol developed 14 general principles of management.",
+"Max Weber developed a theory of authority based on an ideal type of organization called bureaucracy.",
+"The quantitative approach is also called operations research.",
+"Quality management focuses on satisfying customers and continuously improving organizational performance.",
+"Frank and Lillian Gilbreth developed the microchronometer to measure the time taken by workers' movements.",
+/* ===== MEDIUM ===== */
+"Efficiency means using the minimum amount of time, money, effort and resources to complete work.",
+"Preparing the daily schedule and teaching new employees are first-line manager responsibilities, because first-line managers supervise daily work.",
+"First-line managers make sure employees complete their assigned tasks properly. The other options belong to top or middle managers.",
+"Middle managers coordinate work between different groups, departments and divisions.",
+"Middle managers help implement the plans made by top management.",
+"Top managers build a positive organizational culture through their work and actions.",
+"Top managers monitor the business environment to identify changes and opportunities.",
+"Organizing includes deciding where decisions will be made, who will perform each job and who will work for whom.",
+"Comparing actual performance with planned performance and correcting problems is the controlling function.",
+"Motivating employees, giving directions and communicating with them are part of leading.",
+"Deciding what needs to be done and how it will be done is planning.",
+"Reading reports and industry news, attending seminars and maintaining professional contacts are ways a monitor collects information.",
+"Sending memos and reports, sharing decisions and giving information to team members are disseminator activities, because the information goes to people inside the organization.",
+"Presenting reports and attending conferences and meetings share information with people outside the organization, which is the spokesperson role.",
+"Greeting visitors, signing official documents and attending official ceremonies are formal duties of a figurehead.",
+"The liaison builds and maintains relationships with people inside and outside the organization.",
+"Solving conflict between employees, taking corrective action and handling crisis situations are disturbance handler activities.",
+"Preparing budgets, creating schedules and setting priorities are about deciding how resources are used, which is the resource allocator role.",
+"Introducing new ideas, starting improvement projects and planning for the future are entrepreneur activities.",
+"The disturbance handler deals with unexpected problems, conflict and difficult situations.",
+"The notes say the Venetians used a floating warship assembly line, an early example of management.",
+"Taylor emphasized selecting the right worker, providing suitable tools, using standard methods and offering financial incentives.",
+"Taylor's first principle is to develop a scientific method for every job instead of old-fashioned guesswork.",
+"Taylor's fourth principle divides work and responsibility between managers and workers according to their abilities.",
+"Taylor published The Principles of Scientific Management in 1911.",
+"The Gilbreths focused on increasing worker productivity by reducing unnecessary movements.",
+"Weber emphasized control through knowledge, expertise and experience.",
+"In Weber's bureaucracy, promotion is based on merit.",
+"In Weber's bureaucracy, hiring is based on qualifications.",
+"Unity of command means each employee should receive orders from one manager.",
+"Unity of direction means activities with the same goal should follow one plan.",
+"Scalar chain means following the formal line of authority.",
+"Order means keeping people and material in their proper place.",
+"Equity means treating employees fairly.",
+"Remuneration means employees should receive fair payment.",
+"Centralization is about deciding how much authority should remain at the top.",
+"Esprit de corps promotes teamwork and unity among employees.",
+"Stability of tenure means providing employees with job stability.",
+"Initiative means encouraging employees to suggest and implement ideas.",
+"Subordination of individual interest means organizational interests should come before personal interests.",
+"Discipline means employees should follow rules.",
+"The quantitative approach developed from mathematical and statistical methods used to solve military logistics and quality-control problems during World War II.",
+"Quality management emphasizes accurate measurement and empowering employees to contribute to quality improvement.",
+"Today's managers use scientific management by studying the time and movements needed for tasks, hiring the best-qualified employees and designing incentive systems based on output.",
+"Motivation to manage is the willingness and desire to take responsibility for managing people and work.",
+"Interpersonal skills help managers communicate and build good relationships with other people.",
+"Communication skills help managers share information, explain ideas and understand other people.",
+"Effectiveness skills help managers complete important tasks and achieve organizational goals.",
+"A deliberate structure is an organized arrangement of jobs, duties and responsibilities.",
+"Early management practices in ancient civilizations were used to complete large projects such as the pyramids and the Great Wall.",
+"The Industrial Revolution led to the creation of large organizations that needed management.",
+/* ===== HARD ===== */
+"The manager saved time and money (efficient), but the product did not meet customer needs, so the right goal was not achieved (not effective).",
+"The manager achieved what the goals required (effective), but wasted time and money (not efficient).",
+"Efficiency is doing things right with the minimum resources. Effectiveness is completing the right tasks to achieve the organization's goals.",
+"Unity of command says each employee should receive orders from one manager. Two managers giving conflicting orders breaks this.",
+"Unity of direction says activities with the same goal should follow one plan. Separate plans for the same goal break this.",
+"Centralization is how much authority stays at the top. When all major decisions are made by top management, centralization is high.",
+"Fayol's order: 1 Division of labour, 2 Authority, 3 Discipline, 4 Unity of command, 5 Unity of direction, 6 Subordination of individual interest, 7 Remuneration, 8 Centralization, 9 Scalar chain, 10 Order, 11 Equity, 12 Stability of tenure, 13 Initiative, 14 Esprit de corps.",
+"In Fayol's list of 14 principles, the 12th is Stability of tenure (11 is Equity, 13 is Initiative).",
+"In Fayol's list of 14 principles, the 14th and last is Esprit de corps.",
+"Fayol believed management is a separate function from other organizational activities. Taylor is the father of scientific management, and the Gilbreths developed the microchronometer.",
+"Reading industry news is monitoring (collecting information). Emailing the team is disseminating (sharing inside). Presenting at a conference is being a spokesperson (sharing outside).",
+"Unexpected problems, conflict and crisis situations are handled by the disturbance handler.",
+"Signing official documents and attending ceremonies as the company's representative are figurehead duties.",
+"Discussing prices and agreeing on terms that benefit the company is the negotiator role.",
+"Preparing the budget and deciding which team receives equipment is deciding how resources are used, which is the resource allocator role.",
+"Proposing a new idea and starting a pilot project to improve the organization is the entrepreneur role.",
+"Attending meetings with other organizations and maintaining professional contacts is liaison work: building relationships inside and outside the organization.",
+"The liaison is an interpersonal role, along with the figurehead and the leader. Monitor and spokesperson are informational, and negotiator is decisional.",
+"The entrepreneur is a decisional role, not an informational one. The other pairings are correct.",
+"Motivating employees is part of leading. Organizing covers where decisions are made, who performs each job and who works for whom.",
+"Planning sets goals, organizing assigns jobs and resources, leading motivates people, and controlling compares results with the plan.",
+"Finding the cause of low sales and retraining staff is checking performance against the target and taking corrective action, which is controlling.",
+"Controlling means checking progress, comparing actual with planned performance and taking corrective action.",
+"Middle managers implement the changes and strategies created by top managers and coordinate the departments.",
+"Monitoring the business environment for changes and opportunities is a top manager responsibility. The other options are first-line manager responsibilities.",
+"Top managers develop employees' commitment and sense of responsibility and build a positive organizational culture.",
+"Training new employees and preparing the daily schedule are responsibilities of a first-line manager.",
+"Seeing how different parts of an organization work together is conceptual skill.",
+"Explaining clearly and listening carefully are communication skills.",
+"Technical skill is specialized knowledge and ability to perform a specific job or task, such as repairing a machine.",
+"Adam Smith supported the division of labour to increase productivity. His book was published in 1776, not 1911.",
+"1911 minus 1776 equals 135 years.",
+"According to the notes, the Industrial Revolution lasted from 1750 to 1850, which is 100 years.",
+"The Industrial Revolution began in 1750, The Wealth of Nations was published in 1776 and Taylor's Principles in 1911.",
+"Taylor's principles replace old-fashioned guesswork with a scientific method. Letting workers choose methods by guesswork is the opposite.",
+"Selecting the right worker, providing suitable tools, using standard methods and offering financial incentives were emphasized by Taylor.",
+"The Gilbreths developed the microchronometer. Bureaucracy is Weber's, division of labour is Adam Smith's and operations research is the quantitative approach.",
+"Studying time and movements, hiring the best-qualified employees and paying by output are features of scientific management.",
+"During the Industrial Revolution, machines replaced human labour and large organizations were created that needed management.",
+"Weber's bureaucracy has clear rules, responsibilities and authority, hiring based on qualifications, promotion based on merit, chain of command, division of labour and fair application of rules.",
+"In Weber's bureaucracy, promotion is based on merit, not favouritism.",
+"The quantitative approach uses statistics, information models and computer simulation to help managers make better decisions.",
+"Quality management focuses on satisfying customers and continuously improving processes. The quantitative approach is about mathematical and statistical methods.",
+"Organizations have a distinct purpose, are composed of people and have a deliberate structure. Freedom from any structure is not a characteristic."
+];
+
 const SUBJECTS = [
-  {id:"s1", name:"Introduction to Management", questions: MGMT},
+  {id:"s1", name:"Introduction to Management", questions: MGMT, explanations: EXPL},
   {id:"s2", name:"Subject 2", questions: []},
   {id:"s3", name:"Subject 3", questions: []},
   {id:"s4", name:"Subject 4", questions: []},
@@ -238,11 +381,11 @@ function el(tag, cls, text){
   if(text !== undefined) e.textContent = text;
   return e;
 }
-function build(raw){
+function build(raw, ex){
   return raw.map((x,i)=>{
     const [d,t,q,c,...w] = x;
     const opts = shuffle([c,...w]);
-    return {id:i, d, t, q, opts, a:opts.indexOf(c)};
+    return {id:i, d, t, q, opts, a:opts.indexOf(c), e:(ex&&ex[i])||""};
   });
 }
 
@@ -270,7 +413,7 @@ function openSubject(id){
   const s = SUBJECTS.find(x=>x.id===id);
   if(!s){showHome();return;}
   try{ history.replaceState(null,"","#"+id); }catch(e){}
-  state = {subject:s, qs:build(s.questions), diff:"all", topic:"all", answers:{}};
+  state = {subject:s, qs:build(s.questions, s.explanations), diff:"all", topic:"all", answers:{}};
   render();
 }
 
@@ -324,7 +467,7 @@ function render(){
   sh.onclick = ()=>{state.qs = shuffle(state.qs);render();};
   ctl.appendChild(sh);
   const rs = el("button","btn","↺ Restart");
-  rs.onclick = ()=>{state.qs = build(subject.questions); state.answers={}; render(); window.scrollTo(0,0);};
+  rs.onclick = ()=>{state.qs = build(subject.questions, subject.explanations); state.answers={}; render(); window.scrollTo(0,0);};
   ctl.appendChild(rs);
   app.appendChild(ctl);
 
@@ -361,6 +504,8 @@ function renderQ(q,n){
   });
   const note = el("div","note hidden");
   card.appendChild(note);
+  const why = el("div","why hidden");
+  card.appendChild(why);
   function paint(){
     const chosen = state.answers[q.id];
     if(chosen===undefined) return;
@@ -372,6 +517,7 @@ function renderQ(q,n){
     note.classList.remove("hidden","ok","bad");
     if(chosen===q.a){note.classList.add("ok");note.textContent="✓ Correct";}
     else{note.classList.add("bad");note.textContent="✗ Wrong. Correct answer: "+letters[q.a]+". "+q.opts[q.a];}
+    if(q.e){why.classList.remove("hidden");why.textContent="💡 Reason: "+q.e;}
   }
   paint();
   return card;
