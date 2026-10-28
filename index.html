@@ -63,6 +63,12 @@ select{border-radius:10px}
 .note{margin-top:8px;font-size:.88rem;font-weight:600}
 .note.ok{color:var(--ok)}.note.bad{color:var(--bad)}
 .why{margin-top:8px;padding:10px 12px;border-radius:10px;background:var(--accent-soft);font-size:.9rem}
+.dlrow{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:6px 0 4px}
+.dlbtn{display:inline-block;font:inherit;font-weight:600;text-decoration:none;background:var(--accent);color:#fff;border:1px solid var(--accent);border-radius:10px;padding:8px 16px;cursor:pointer}
+.dlbtn:hover{filter:brightness(1.08)}
+.dlbtn.off{background:var(--card);color:var(--muted);border-color:var(--line)}
+.dlbtn.off:hover{filter:none;border-color:var(--accent)}
+.dlmsg{color:var(--muted);font-size:.88rem}
 .emptybox{text-align:center;padding:50px 20px;color:var(--muted)}
 .result{text-align:center;font-size:1.1rem}
 .hidden{display:none}
@@ -364,11 +370,13 @@ const EXPL = [
 ];
 
 const SUBJECTS = [
-  {id:"s1", name:"Introduction to Management", questions: MGMT, explanations: EXPL},
-  {id:"s2", name:"Subject 2", questions: []},
-  {id:"s3", name:"Subject 3", questions: []},
-  {id:"s4", name:"Subject 4", questions: []},
-  {id:"s5", name:"Subject 5", questions: []}
+  /* To enable a Download button, put the PDF file in the same folder as index.html
+     and set pdf to its file name, e.g.  pdf:"introduction-to-management.pdf"  */
+  {id:"s1", name:"Introduction to Management", questions: MGMT, explanations: EXPL, pdf:""},
+  {id:"s2", name:"Subject 2", questions: [], pdf:""},
+  {id:"s3", name:"Subject 3", questions: [], pdf:""},
+  {id:"s4", name:"Subject 4", questions: [], pdf:""},
+  {id:"s5", name:"Subject 5", questions: [], pdf:""}
 ];
 
 /* ---------- APP ---------- */
@@ -429,6 +437,22 @@ function render(){
   back.onclick = showHome;
   app.appendChild(back);
   app.appendChild(el("h1",null,subject.name));
+
+  /* download button (same place for every subject) */
+  const dl = el("div","dlrow");
+  if(subject.pdf){
+    const a = el("a","dlbtn","⬇ Download Notes");
+    a.href = subject.pdf;
+    a.setAttribute("download","");
+    a.target = "_blank"; a.rel = "noopener";
+    dl.appendChild(a);
+  } else {
+    const b = el("button","dlbtn off","⬇ Download Notes");
+    const msg = el("span","dlmsg");
+    b.onclick = ()=>{ msg.textContent = "Notes for this subject will be added soon."; };
+    dl.appendChild(b); dl.appendChild(msg);
+  }
+  app.appendChild(dl);
 
   if(!qs.length){
     const box = el("div","panel emptybox");
