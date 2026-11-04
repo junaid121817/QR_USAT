@@ -2448,7 +2448,8 @@ const SUBJECTS = [
   {id:"s1", name:"Introduction to Management", questions: MGMT, explanations: EXPL, pdf:"introduction-to-management.pdf"},
   {id:"s2", name:"System and Network Administration", questions: SNA, explanations: SNA_EXPL, pdf:"system-and-network-administration.pdf"},
   {id:"s3", name:"Virtual System & Services", questions: VSS, explanations: VSS_EXPL, pdf:"virtual-system-and-services.pdf"},
-  {id:"s4", name:"Operating System", questions: OS, explanations: OS_EXPL, pdf:"operating-system.pdf"},
+  {id:"s4", name:"Operating System", questions: OS, explanations: OS_EXPL, pdf:"",
+    files:[["Week 1 – Intro","OS_Week1.pptx"],["Week 2 – Structure & System Calls","OS_Week2_Structure_SystemCalls_Slides.pptx"],["Week 3 – Processes","OS_Week3_Processes_Slides.pptx"],["Week 4 – Threads","OS_Week4_Threads_Slides.pptx"],["Week 5 – CPU Scheduling","OS_Week5_CPU_Scheduling_Slides.pptx"],["Week 6 – Synchronization","OS_Week6_Process_Synchronization_Slides.pptx"]]},
   {id:"s5", name:"Subject 5", questions: [], pdf:""}
 ];
 
@@ -2513,7 +2514,15 @@ function render(){
 
   /* download button (same place for every subject) */
   const dl = el("div","dlrow");
-  if(subject.pdf){
+  if(subject.files && subject.files.length){
+    subject.files.forEach(f=>{
+      const a = el("a","dlbtn","⬇ "+f[0]);
+      a.href = f[1];
+      a.setAttribute("download","");
+      a.target = "_blank"; a.rel = "noopener";
+      dl.appendChild(a);
+    });
+  } else if(subject.pdf){
     const a = el("a","dlbtn","⬇ Download Notes");
     a.href = subject.pdf;
     a.setAttribute("download","");
