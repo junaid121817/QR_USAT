@@ -899,6 +899,9 @@ const SNA_EXPL = [
 ];
 
 /* ===== Virtual System & Services: questions ===== */
+/* Format of every row: [difficulty, topic, question, CORRECT, wrong1, wrong2, wrong3, explanation] */
+
+/* ---------- Sir Notes MCQs (original 248 questions) ---------- */
 const VSS = [
   ["e", "Virtualization Basics", "Virtualization is a technology that allows us to create multiple virtual computers on:", "One physical computer", "Many physical computers only", "A network cable", "A single application"],
   ["e", "Virtualization Basics", "The virtual computers created by virtualization are called:", "Virtual machines", "Physical servers", "Hypervisors", "Containers only"],
@@ -1401,6 +1404,205 @@ const VSS_EXPL = [
   "In the non-virtual model the OS works directly with hardware. In the virtual model a VMM creates multiple virtual environments.",
   "The hypervisor creates and manages VMs and distributes resources, so its failure affects the VMs it manages."
 ];
+
+/* ---------- Section 2: Slides & Web Material MCQs ---------- */
+/* Sources: Ch16 Virtual Machines slides, "Virtualization in Cloud Computing" slides,
+   GeeksforGeeks (virtualization types, OS-based virtualization, operating systems),
+   "Operating Systems and Windows" slides */
+const VSM_ALL = [
+/* ---- Overview & basics (Ch16) ---- */
+["e","VM Overview","The fundamental idea of virtual machines is to abstract the hardware of a single computer into several different:","Execution environments","Physical computers","Network cables","Compilers","The Ch16 overview: abstract the hardware of a single computer into several different execution environments."],
+["e","VM Overview","In virtualization, the underlying hardware system is called the:","Host","Guest","Hypervisor","Template","Host = underlying hardware system."],
+["e","VM Overview","The software that creates and runs virtual machines is called the:","Virtual machine manager (VMM) or hypervisor","Guest operating system","Boot loader","Device driver","The VMM (hypervisor) creates and runs virtual machines by providing an interface identical to the host."],
+["e","VM Overview","The process provided with a virtual copy of the host is called the:","Guest","Host","Kernel","Firmware","A guest is a process provided with a virtual copy of the host, usually an operating system."],
+["m","VM Overview","The VMM provides an interface identical to the host, EXCEPT in the case of:","Paravirtualization","Type 1 hypervisors","Live migration","Snapshots","In paravirtualization the VMM does not present an exact duplicate of the hardware."],
+["m","VM Overview","What can a single physical machine do with virtualization?","Run multiple operating systems concurrently, each in its own VM","Run only one OS at a time","Run only Windows guests","Run only without a CPU","A single machine can run multiple OSes concurrently, each in its own virtual machine."],
+
+/* ---- Implementation of VMMs / types ---- */
+["e","Hypervisor Types","Which hypervisor type is a hardware-based solution that supports VM creation through firmware?","Type 0","Type 1","Type 2","Type 3","Type 0 hypervisors are hardware-based and implemented via firmware (e.g. IBM LPARs, Oracle LDOMs)."],
+["e","Hypervisor Types","IBM LPARs and Oracle LDOMs are examples of:","Type 0 hypervisors","Type 1 hypervisors","Type 2 hypervisors","Emulators","Both are firmware-based Type 0 hypervisors."],
+["e","Hypervisor Types","VMware ESX, Joyent SmartOS and Citrix XenServer are examples of:","Type 1 hypervisors","Type 0 hypervisors","Type 2 hypervisors","Programming-environment virtualization","These are OS-like software built to provide virtualization, i.e. Type 1."],
+["e","Hypervisor Types","Which are examples of general-purpose OSes that also provide VMM functions (Type 1)?","Windows Server with Hyper-V and Red Hat Linux with KVM","VirtualBox and Parallels","Java and .NET","BSD Jails and Solaris Zones","Windows Server + Hyper-V and RedHat Linux + KVM are general-purpose OSes with VMM functions."],
+["e","Hypervisor Types","VMware Workstation, VMware Fusion, Parallels Desktop and Oracle VirtualBox are examples of:","Type 2 hypervisors","Type 1 hypervisors","Type 0 hypervisors","Application containment","Type 2 hypervisors are applications running on a standard OS."],
+["m","Hypervisor Types","Type 2 hypervisors are:","Applications that run on standard operating systems and provide VMM features to guests","Firmware built into the hardware","Special OSes that run in kernel mode on bare hardware","Only used with Java","Type 2 = a VMM running as an application on a host OS."],
+["m","Hypervisor Types","Which type of hypervisor tends to have poorer overall performance because it cannot use some hardware features?","Type 2","Type 1","Type 0","None of them","Type 2 VMM is just another process on the host, so it cannot take advantage of some hardware features. Its benefit: no changes to the host OS."],
+["m","Hypervisor Types","Which technique has the guest OS modified to cooperate with the VMM for better performance?","Paravirtualization","Emulation","Application containment","Binary translation","Paravirtualization = guest OS modified to work with the VMM to optimize performance."],
+["m","Hypervisor Types","Oracle Java (JVM) and Microsoft .NET are examples of:","Programming-environment virtualization","Type 0 hypervisors","Application containment","Emulation","The VMM does not virtualize real hardware but creates an optimized virtual system for the language."],
+["m","Hypervisor Types","Oracle Solaris Zones, BSD Jails and IBM AIX WPARs are examples of:","Application containment","Type 2 hypervisors","Emulators","Paravirtualization","They segregate applications from the OS, making them more secure and manageable."],
+["m","Hypervisor Types","Application containment is described in the slides as:","Not virtualization at all, but virtualization-like features","Full hardware virtualization","A firmware feature","A type of emulator","Application containment provides virtualization-like features by segregating applications from the operating system."],
+
+/* ---- History ---- */
+["e","History","Virtualization first appeared in:","IBM mainframes in 1972","Intel PCs in 2005","Linux in 1991","Java in 1995","The Ch16 history slide: first on IBM mainframes in 1972, letting multiple users share a batch-oriented system."],
+["m","History","The formal definition of virtualization says a VMM provides an environment for programs that is:","Essentially identical to the original machine","Completely different from the original machine","Much slower than the original machine","Limited to one program","Formal requirement: essentially identical environment, only minor performance decrease, and the VMM in complete control of system resources."],
+["m","History","According to the formal definition, programs running in the VMM environment show:","Only minor performance decreases","Major slowdowns","No change at all ever","Faster speed than native always","Only minor decrease in performance is one of the formal requirements."],
+["h","History","Why did researchers try virtualizing general-purpose PCs in the late 1990s?","Intel CPUs became fast enough","Intel added VT-x","Java was released","IBM stopped mainframes","Intel CPUs were fast enough in the late 1990s. VT-x came later in 2005 and AMD-V in 2006."],
+
+/* ---- Benefits and features ---- */
+["e","Benefits & Features","In a virtualized system, the host is protected from VMs and VMs are protected from each other. A result of this is:","A virus is less likely to spread","A virus spreads faster","VMs share all memory","There is no isolation","Isolation means a virus is less likely to spread between VMs."],
+["e","Benefits & Features","How can VMs share data with each other, even though they are isolated?","Through a shared file system volume or network communication","Through shared registers","By running in the same CPU register","They can never share","Sharing is provided via a shared file system volume or network communication."],
+["m","Benefits & Features","A snapshot of a VM allows you to:","Restore the VM back to a given state","Delete the host OS","Convert it to a physical machine","Change the CPU type","Snapshot = a state of a VM that can be restored later. Some VMMs allow multiple snapshots per VM."],
+["m","Benefits & Features","Creating a copy of a VM and running both the original and the copy is called:","Cloning","Snapshotting","Trapping","Ballooning","Cloning = create a copy and run both the original and the copy."],
+["m","Benefits & Features","Templating means:","Creating an OS + application VM and using it to create multiple instances","Compiling a program","Copying only memory pages","Deleting old VMs","Templating = create a VM with OS and applications and use it to make multiple instances for customers."],
+["m","Benefits & Features","Live migration means:","Moving a running VM from one host to another without interrupting user access","Shutting down a VM then restarting it","Copying a VM to tape","Converting a VM to a container","Live migration moves a running guest with no interruption of user access."],
+["m","Benefits & Features","The features of virtualization (freeze, suspend, snapshot, clone, templating, live migration) taken together lead to:","Cloud computing","Emulation","Binary translation","Hardware failure","The slides: all those features taken together -> cloud computing."],
+["m","Benefits & Features","In cloud infrastructure, programs use ______ to tell the infrastructure to create new guests, VMs or virtual desktops.","APIs","Floppy disks","Binary translation","Interrupts only","Using APIs, programs tell cloud infrastructure (servers, networking, storage) to create new guests."],
+
+/* ---- Building blocks ---- */
+["m","Building Blocks","Most VMMs implement a virtual CPU (VCPU) to represent:","The state of the CPU per guest as the guest believes it to be","The physical CPU temperature","The host's file system","The network card","The VCPU stores per-guest CPU state, loaded and stored when the guest is context-switched on the CPU."],
+["m","Trap-and-Emulate","In trap-and-emulate, the guest (including its kernel) runs in:","Real user mode","Real kernel mode","Firmware mode","BIOS mode","It is not safe to let the guest kernel run in kernel mode, so virtual user and virtual kernel modes both run in real user mode."],
+["m","Trap-and-Emulate","What causes a trap in trap-and-emulate?","The guest attempts a privileged instruction in user mode","The guest uses the keyboard","The guest saves a file","The guest opens a window","Attempting a privileged instruction in user mode causes an error (trap) and the VMM gains control."],
+["m","Trap-and-Emulate","After a trap, the VMM:","Analyzes the error, executes the operation as the guest attempted it, and returns control to the guest in user mode","Shuts down the guest","Deletes the VCPU","Restarts the host","That is exactly the trap-and-emulate sequence."],
+["h","Trap-and-Emulate","In a trap-and-emulate system, which code runs slower than it would natively?","Guest kernel-mode (privileged) code","Guest user-mode code","Host user code only","All code runs at the same speed","User-mode guest code runs at native speed; kernel-mode code is slower due to trap-and-emulate."],
+["m","Binary Translation","Binary translation is needed because some CPUs:","Do not have a clean separation between privileged and non-privileged instructions","Have no memory","Have too many cores","Are always in kernel mode","Earlier Intel x86 CPUs are an example."],
+["m","Binary Translation","The x86 popf instruction is a problem case because in user mode it:","Replaces only some flags and generates no trap","Always generates a trap","Crashes the CPU","Replaces all flags","In privileged mode all flags are replaced; in user mode only some are, with no trap."],
+["h","Binary Translation","Trap-and-emulate was considered impossible on x86 until:","1998","1972","2005","2010","Binary translation solved the problem in 1998."],
+["m","Binary Translation","In binary translation, if the guest VCPU is in kernel mode, the VMM:","Examines instructions before execution; special instructions are translated, others run natively","Runs all instructions natively","Blocks all instructions","Sends every instruction to the disk","The VMM reads a few instructions ahead of the program counter and translates the special instructions."],
+["m","Binary Translation","Products like VMware improve binary translation performance using:","Caching of translations","More RAM only","Disabling the guest","Type 0 hypervisors","Translate once and reuse the cached translation."],
+["h","Binary Translation","Booting Windows XP as a guest caused about 950,000 translations at 3 microseconds each. That is roughly a slowdown of:","3 seconds (about 5%)","30 seconds (about 50%)","3 minutes","No slowdown","950,000 x 3 microseconds is about 3 seconds, around 5% slower than native."],
+["m","Nested Page Tables","Nested page tables (NPTs) are used by the VMM to:","Represent each guest's page-table state","Replace the TLB","Store files on disk","Schedule threads","The VMM maintains per-guest NPTs, just as the VCPU stores guest CPU state."],
+["m","Nested Page Tables","A downside of nested page tables is:","More TLB misses and slower performance","Less memory used","No isolation","They do not work with guests","The slides: can cause many more TLB misses, giving slower performance."],
+["m","Hardware Assistance","Intel added the VT-x instructions in ______ and AMD added AMD-V in ______.","2005; 2006","1998; 1999","1972; 1980","2010; 2012","VT-x (Intel) 2005, AMD-V 2006."],
+["m","Hardware Assistance","CPUs with VT-x/AMD-V define additional CPU modes called:","Guest and host","Safe and unsafe","Virtual and real","Master and slave","The VMM enables host mode, defines each guest, then switches to guest mode."],
+["m","Hardware Assistance","With hardware assistance such as VT-x, there is no need for:","Binary translation","Any hypervisor","A guest OS","A CPU","CPUs with these instructions remove the need for binary translation."],
+
+/* ---- VM lifecycle and types ---- */
+["m","VM Lifecycle","In a VM lifecycle, resources assigned to a new VM include:","Number of cores, amount of memory, networking and storage details","Only a monitor","Only a keyboard","A new motherboard","The VMM creates the VM and assigns cores, memory, network and storage."],
+["m","VM Lifecycle","VM sprawl means:","Having lots of VMs whose history and state are difficult to track","A VM that is too large","A VM with no OS","A VM that cannot be deleted","Creating VMs is so easy that sprawl can occur."],
+["m","Type 0 Hypervisor","Type 0 hypervisors are an old idea sold under names such as:","Partitions and domains","Zones and jails","Bytecode and classes","Containers and pods","Hardware manufacturers called them partitions or domains."],
+["m","Type 0 Hypervisor","In a Type 0 hypervisor, each guest usually has:","Dedicated hardware","Shared hardware only","No hardware","Only emulated hardware","Each guest has dedicated HW, which makes I/O a challenge."],
+["h","Type 0 Hypervisor","A unique ability of Type 0 hypervisors is:","Virtualization within virtualization (a guest can itself be a VMM with guests)","Running without firmware","Running only one guest","Unlimited I/O devices","Other types have difficulty doing nested virtualization."],
+["m","Type 1 Hypervisor","Type 1 hypervisors are commonly found in:","Company datacenters","Smartphones only","Calculators","Printers","They are becoming 'datacenter operating systems'."],
+["m","Type 1 Hypervisor","Type 1 hypervisors run in:","Kernel mode","User mode only","Firmware only","Guest mode only","They are special-purpose OSes running natively on hardware in kernel mode."],
+["h","Type 1 Hypervisor","Type 1 hypervisors implement device drivers for the host hardware because:","No other component can do it","Guests prefer it","Drivers are not needed","They have no kernel","They also provide CPU and memory management."],
+["h","Type 1 Hypervisor","General-purpose OSes with VMM functions (e.g. RHEL with KVM) treat guest OSes as:","Just another process","Hardware","Firmware","A type of file","They have special handling when the guest executes special instructions."],
+["m","Type 2 Hypervisor","In a Type 2 hypervisor, the VMM is:","Simply another process run and managed by the host","Part of the firmware","The first loaded OS","The guest kernel","The host OS does not even know it is a VMM running guests."],
+["m","Paravirtualization","Paravirtualization uses which call for page-table changes?","Hypercall","Syscall","Fork","Interrupt only","The guest uses a hypercall (call to the hypervisor) for page-table changes. Each guest has its own read-only tables."],
+["m","Paravirtualization","Xen is the leader in:","Paravirtualization","Application containment","Java virtualization","Emulation","Xen is the leader in the paravirtualized space."],
+["h","Paravirtualization","Modern Xen no longer requires guest modification on modern CPUs, so it is:","No longer paravirtualization","Still a Type 0 hypervisor","An emulator","A container","On modern CPUs Xen needs no modified guest, hence it is no longer paravirtualization."],
+["m","Paravirtualization","Does paravirtualization fit the formal definition of virtualization?","No, because the VMM does not present an exact duplicate of the hardware","Yes, always","Only on Type 2","Only on IBM mainframes","It is still useful, since it increases performance."],
+["m","Programming Environment","Java's slogan 'write once, run anywhere' is possible because of:","The Java Virtual Machine (JVM)","Type 0 hypervisors","Application containment","Binary translation","Java is compiled into architecture-neutral bytecode that runs on the JVM."],
+["m","Programming Environment","Java source is compiled into:","Architecture-neutral bytecode (.class files)","Native machine code only","Firmware","SQL","The class loader loads the .class files and the JVM executes them."],
+["m","Programming Environment","The JIT compiler in the JVM:","Turns bytecode into native code and caches it","Deletes bytecode","Compiles C programs","Loads drivers","Just-in-time compilation makes Java faster."],
+["e","Programming Environment","Java was invented by:","Sun Microsystems in 1995","IBM in 1972","Microsoft in 2000","Oracle in 2010","Java was invented by Sun Microsystems in 1995."],
+["m","Programming Environment","The JVM includes ______ to reclaim memory that is no longer in use.","Garbage collection","Ballooning","Snapshots","Trap-and-emulate","Garbage collection."],
+["m","Emulation","Which is true about emulation?","It lets a guest run on a different CPU architecture by translating every guest instruction","It requires the same CPU as the guest","It is faster than native code","It is a Type 1 hypervisor","Emulation is not virtualization because the CPU can be different."],
+["m","Emulation","How slow can emulation be compared with native code?","An order of magnitude slower","Exactly the same speed","10 times faster","Slightly faster","Performance challenge - order of magnitude slower than native code."],
+["e","Emulation","Emulation is very popular in:","Gaming (running old consoles on new machines)","Word processing","Email","Printing","Old consoles are emulated on new hardware."],
+["h","Application Containment","In Solaris zones, how many kernels run?","Only one - the host OS kernel","One per zone","Two","None","Only one kernel is running and the OS/devices are virtualized so the zone sees itself as processes on the system."],
+["m","Application Containment","Each Solaris zone has its own:","Applications, networking stack/addresses/ports and user accounts","Kernel","Hardware","CPU chip","CPU and memory resources are divided between zones, and a zone can have its own scheduler."],
+
+/* ---- OS components ---- */
+["m","CPU Scheduling","When there are not enough CPUs for all guests, the situation is called:","CPU overcommitment","CPU balloon","CPU snapshot","CPU emulation","Usually there are not enough CPUs -> overcommitment."],
+["m","CPU Scheduling","Under CPU oversubscription, guests may experience:","Poor response times and incorrect time-of-day clocks","Faster execution","More memory","Perfect timing","Cycle stealing by the VMM means guests do not get the cycles they expect."],
+["h","CPU Scheduling","A guest timesharing scheduler tries to schedule a 100 ms time slice under oversubscription. It might take:","100 ms, 1 second, or longer","Always exactly 100 ms","0 ms","10 ms always","Slices may be stretched due to cycle stealing."],
+["m","Memory Management","Which is NOT one of the three memory-management methods used by VMware ESX?","Binary translation","Double-paging","Balloon memory manager","Deduplication","ESX uses double-paging, a balloon driver and deduplication."],
+["m","Memory Management","The balloon memory manager in a guest:","Is a pseudo-device driver that lets the VMM make the guest free or gain memory","Is a hardware chip","Deletes the guest","Speeds up the CPU","The balloon driver allocates/deallocates memory to change the guest's physical memory use."],
+["m","Memory Management","Deduplication in memory management means:","Finding identical pages loaded more than once and mapping a single page into multiple guests","Deleting the guest","Copying all pages twice","Adding more RAM","The VMM determines if the same page is loaded more than once."],
+["m","Memory Management","Double-paging happens when:","The guest page table says a page is in a physical frame, but the VMM has moved it to backing store","Two guests share a CPU","Pages are compressed","The disk is full","Guest believes the page is in memory, but the VMM paged it out."],
+["m","I/O","To give guests network access, a VMM can:","Bridge the guest to the network and/or provide NAT","Disable the network","Use only USB","Reboot the guest","Bridging allows direct access; NAT hides the guest's address behind a machine-local address."],
+["m","I/O","Direct device access, DMA pass-through and direct interrupt delivery are used to:","Reduce the work the hypervisor must do for I/O","Increase the work of the hypervisor","Remove hardware","Disable drivers","The less the hypervisor does for I/O, the better. HW support is needed."],
+["m","Storage","Where does a Type 1 hypervisor store guest root disks and configuration?","As a disk image in a file system provided by the VMM","In the BIOS","On the guest CPU","In the monitor","Type 1 stores guest root disks and config within the VMM's file system as disk images."],
+["m","Storage","In a Type 2 hypervisor, a guest's disk is stored as:","Files in the file system provided by the host OS","Firmware","Network cable","A kernel module","Duplicating the file creates a new guest, and moving the file moves the guest."],
+["m","Storage","P-to-V (physical-to-virtual) conversion means:","Converting native disk blocks into VMM format","Converting a VM to physical hardware","Moving a VM between servers","Deleting a VM","V-to-P is the reverse."],
+["h","Live Migration","In live migration, the source VMM first:","Establishes a connection with the target VMM","Freezes the guest immediately","Sends dirty pages","Deletes the guest","Step 1: connection established. Step 2: target creates a new guest with a new VCPU."],
+["h","Live Migration","In live migration, the source sends read-only pages first, then read-write pages marked clean, and repeats sending:","Pages dirtied by the guest during the previous step","Only the VCPU","Nothing more","Only the disk","Dirty pages are re-sent until the cycle becomes very short."],
+["h","Live Migration","In the final step of live migration, the source VMM:","Freezes the guest, sends final state and dirty pages, and the target starts it; then the source terminates the guest","Keeps running both copies forever","Deletes the target","Reboots the host","After the target acknowledges it is running, the source terminates the guest."],
+["m","Examples","VMware Workstation is classified as:","A Type 2 hypervisor","A Type 0 hypervisor","A Type 1 hypervisor","An emulator","It runs as an application on a native host OS and supports many guests concurrently."],
+
+/* ---- Virtualization in Cloud Computing slides ---- */
+["e","Cloud Virtualization","Virtualization creates multiple simulated environments from:","A single physical hardware system","Many separate networks","A single cable","The internet only","The VCC slides: multiple simulated environments (VMs) from a single physical hardware system."],
+["e","Cloud Virtualization","In the traditional one-OS-per-server model, CPU utilization is often:","Under 20%","Over 90%","Exactly 100%","Always 50%","Traditional physical servers have underutilized CPU (often under 20%)."],
+["e","Cloud Virtualization","Which is a problem of traditional physical servers?","High hardware acquisition cost","Minutes to deploy","Efficient resource pools","Multiple OSes on one host","Traditional servers: underutilized CPU, wasted RAM/storage, high cost, slow provisioning, one OS per machine."],
+["e","Cloud Virtualization","How long does it typically take to deploy new VMs in a virtualized infrastructure?","Minutes","Weeks","Months","Years","Virtualized infrastructure: minutes to deploy new VMs."],
+["e","Cloud Virtualization","Which is NOT a listed benefit of virtualization?","Higher hardware cost","Better hardware utilization","Faster server deployment","Improved isolation and security","Benefits: better utilization, reduced cost, scalability, isolation/security, faster deployment, efficient resource allocation."],
+["e","Cloud Virtualization","How many core components are in the virtualization architecture (hardware, hypervisor, VMs)?","Three","Two","Four","Five","Physical hardware (host), hypervisor, and virtual machines (guests)."],
+["e","Cloud Virtualization","In the virtualization architecture, the layer between the physical hardware and the VMs is the:","Hypervisor","Application","Browser","Firewall","The hypervisor creates, manages and isolates VMs and allocates CPU, RAM, storage and network."],
+["m","Cloud Virtualization","Which is the correct sequence of how virtualization works?","Physical server → install hypervisor → allocate resources → create VMs → run applications","Create VMs → install hypervisor → physical server → applications","Applications → VMs → hypervisor → server","Hypervisor → applications → server → VMs","The 5-step flow from the slides."],
+["e","Cloud Virtualization","In virtualization terms, the host is the ______ and the guests are the ______.","Physical machine; VMs","VMs; physical machine","Hypervisor; application","Network; storage","Host = physical machine; Guests = VMs."],
+["m","Cloud Virtualization","Each VM in a virtualized system behaves like:","An independent computer with its own OS, apps, files and configuration","A shared folder","A simple process with no OS","A network switch","VMs share the same physical hardware but behave like independent computers."],
+["e","Cloud Virtualization","A Type 1 hypervisor is also called:","Bare-metal hypervisor","Hosted hypervisor","Application hypervisor","Container engine","Type 1 is installed directly on hardware with no host OS."],
+["e","Cloud Virtualization","A Type 2 hypervisor is also called:","Hosted hypervisor","Bare-metal hypervisor","Firmware hypervisor","Network hypervisor","Type 2 runs on top of an existing OS."],
+["e","Cloud Virtualization","Which are examples of Type 1 hypervisors in the slides?","VMware ESXi and Hyper-V","VirtualBox and Workstation","Docker and Podman","Java and .NET","Type 1 examples: VMware ESXi, Microsoft Hyper-V."],
+["e","Cloud Virtualization","Which are examples of Type 2 hypervisors in the slides?","VirtualBox and VMware Workstation","VMware ESXi and Hyper-V","Amazon S3 and EC2","SAN and SDN","Type 2 examples: Oracle VirtualBox, VMware Workstation."],
+["m","Cloud Virtualization","Type 1 hypervisors are mainly used in:","Enterprise and cloud data centers","Personal testing labs only","Calculators","Printers","Type 1 has high performance and efficiency."],
+["m","Cloud Virtualization","Type 2 hypervisors are ideal for:","Personal use, testing and labs","Large cloud data centers only","Embedded firmware","Bare-metal clouds","Easier setup but slightly lower performance."],
+["m","Cloud Virtualization","Why is a Type 2 hypervisor slower than Type 1?","Requests must pass through the host OS first","It has no CPU","It uses firmware","It has no VMs","The article states that requests go through the host OS."],
+["e","Cloud Virtualization","How many types of virtualization are listed in the slides?","Six","Three","Four","Eight","Application, Network, Desktop, Storage, Server and Data."],
+["e","Cloud Virtualization","Which is NOT among the six types of virtualization in the slides?","Memory virtualization","Application virtualization","Desktop virtualization","Data virtualization","The six: Application, Network, Desktop, Storage, Server, Data."],
+
+/* ---- Six types of virtualization ---- */
+["e","Application Virtualization","Application virtualization lets applications:","Run independently of the local OS, e.g. on a remote server","Run only after local installation","Run only on the same OS","Work only offline","Remote access without local install and simplified deployment."],
+["e","Application Virtualization","Microsoft App-V and Citrix Virtual Apps are examples of:","Application virtualization","Network virtualization","Storage virtualization","Data virtualization","Example use: running Excel on an iPad via a remote server."],
+["m","Application Virtualization","A typical use case of application virtualization is:","BYOD and remote application access","Pooling disks","Software-defined routing","Combining databases","Use cases: remote app access, enterprise software deployment, BYOD."],
+["e","Network Virtualization","Network virtualization separates routing, switching and firewall functions from:","Physical network hardware","Applications","Storage disks","Users","This forms a software-defined network (SDN)."],
+["e","Network Virtualization","AWS VPC is an example of:","Network virtualization","Desktop virtualization","Storage virtualization","Data virtualization","VPC lets you create virtual networks, subnets, route tables and security groups in software."],
+["m","Network Virtualization","Network virtualization is the foundation of:","Software-Defined Networking (SDN)","Application streaming","Data lakes","Hyper-threading","Software-based routing, switching and firewalls."],
+["e","Desktop Virtualization","In desktop virtualization, the user's desktop environment is hosted on:","A central server","The user's local disk only","A USB drive","A printer","Users connect via thin clients or other devices; data stays secure on the server side."],
+["e","Desktop Virtualization","Amazon WorkSpaces is an example of:","Desktop virtualization","Storage virtualization","Network virtualization","Data virtualization","It provides a Windows 11 desktop accessible from a Chromebook or tablet."],
+["m","Desktop Virtualization","Which is a use case of desktop virtualization?","Remote workforces and computer labs","Pooling storage arrays","Routing packets","Unifying data sources","Education, computer labs, enterprise desktop management and secure access."],
+["e","Storage Virtualization","Storage virtualization combines physical storage from multiple devices into:","One virtual storage pool managed centrally","Many separate disks","One application","A hypervisor","Users see a single storage system."],
+["e","Storage Virtualization","SAN and Amazon S3 are examples of:","Storage virtualization","Server virtualization","Desktop virtualization","Application virtualization","S3: one logical bucket with data distributed across many physical drives."],
+["m","Storage Virtualization","Benefits of storage virtualization include:","Improved utilization, easy expansion and higher availability","Higher power use","Isolated apps only","Remote desktops","Combines disks into one logical pool with a centralized console."],
+["e","Server Virtualization","Server virtualization divides one physical server into:","Multiple isolated virtual servers (VMs)","One bigger server","Many networks","A storage pool","Each VM has its own OS, applications and resources."],
+["e","Server Virtualization","VMware vSphere is an example of:","Server virtualization","Network virtualization","Data virtualization","Storage virtualization","Example: Linux web server, Windows DB and Linux mail on one physical host."],
+["m","Server Virtualization","A major use case of server virtualization is:","Server consolidation in data centers","Remote desktops for students","Creating virtual networks only","Combining storage","Use cases: data centers, cloud platforms, consolidation, development/testing."],
+["e","Data Virtualization","Data virtualization creates an abstraction layer between users and:","Data sources","Hypervisors","VMs","Desktops","Data from several systems appears to come from one location."],
+["m","Data Virtualization","In data virtualization, the data:","Stays in its original location with no copying or migration","Is copied to a new data warehouse","Is deleted after use","Is moved to the hypervisor","No physical move or full replication needed."],
+["e","Data Virtualization","Denodo and Oracle Data Service are examples of:","Data virtualization","Desktop virtualization","Network virtualization","Application virtualization","Example: a dashboard combining a SQL DB and a cloud data lake live."],
+["m","Data Virtualization","Data virtualization is ideal for:","BI and analytics integration","Packet routing","Running desktops","Booting VMs","Use cases: BI/analytics, data integration, enterprise reporting, hybrid data."],
+["h","Six Types","A company wants staff to see data from a SQL database and a cloud data lake as one dataset without moving the data. Which type fits?","Data virtualization","Storage virtualization","Server virtualization","Desktop virtualization","Data virtualization leaves data in place; storage virtualization pools physical disks."],
+["h","Six Types","A school wants students to access the same Windows 11 desktop from any tablet. Which type fits?","Desktop virtualization","Application virtualization","Network virtualization","Data virtualization","Desktop virtualization runs the whole desktop remotely; application virtualization runs only an app."],
+["h","Six Types","Which pair is correctly matched?","Storage virtualization → Amazon S3","Network virtualization → Amazon S3","Server virtualization → AWS VPC","Desktop virtualization → Denodo","S3 = storage, VPC = network, Denodo = data virtualization."],
+["m","Cloud Examples","AWS EC2, Azure VMs and Google Compute Engine are examples of:","Server/compute virtualization","Storage virtualization","Desktop virtualization","Network virtualization","They provide on-demand virtual servers."],
+
+/* ---- Virtualization vs cloud ---- */
+["e","Virtualization vs Cloud","Virtualization is best described as a:","Technology/tool","Service delivery model","Payment plan","Network cable","Virtualization = technology; cloud = service."],
+["e","Virtualization vs Cloud","Cloud computing is best described as a:","Service delivery model built on technologies such as virtualization","Hardware component","Programming language","Type of hypervisor","Cloud delivers computing resources and services over a network."],
+["m","Virtualization vs Cloud","The main focus of virtualization is:","Hardware and resource efficiency","Agility and on-demand access","Billing","Marketing","Cloud computing focuses on agility, scalability and on-demand access."],
+["m","Virtualization vs Cloud","Infrastructure in cloud computing is typically:","Provided by a cloud provider","Always owned locally","Not required","Only on a single PC","With virtualization alone, infrastructure may be owned and managed locally."],
+["h","Virtualization vs Cloud","Which statement is correct?","Cloud computing is built on technologies including virtualization","Virtualization is built on cloud computing","They are exactly the same thing","Cloud computing needs no virtualization","Virtualization is a foundational enabling technology for cloud computing."],
+
+/* ---- OS-based virtualization (containers) ---- */
+["e","OS-based Virtualization","OS-based virtualization is also called:","Containerization","Hyper-threading","Paging","Emulation","It lets multiple isolated user-space instances (containers) run on a single OS kernel."],
+["e","OS-based Virtualization","In OS-based virtualization, containers share the:","Host OS kernel","Hypervisor","Guest OS","BIOS only","All containers share the host OS kernel, while each VM has its own kernel."],
+["m","OS-based Virtualization","Which kernel feature provides process, network and filesystem isolation for containers?","Namespaces","cgroups","Hypercalls","Snapshots","Namespaces isolate; cgroups limit resources."],
+["m","OS-based Virtualization","Which kernel feature limits and prioritizes CPU, memory, disk I/O and network per container?","cgroups (control groups)","Namespaces","Balloon driver","JIT","cgroups control resource use per container."],
+["m","OS-based Virtualization","Compared with VMs, containers are:","Lighter, faster to start and use fewer resources","Heavier and slower to start","Using one OS per container","Needing a hypervisor always","Containers don't emulate full hardware."],
+["m","OS-based Virtualization","Which provides stronger OS-level isolation?","Virtual machines","Containers","Both are identical","Neither","VMs have stronger isolation; containers share a kernel."],
+["m","OS-based Virtualization","A major security risk of containers is:","A breach in the shared host OS could affect all containers","Each container has its own kernel","They cannot be isolated at all","They need a hypervisor","Shared host OS means a breach could affect all others."],
+["e","OS-based Virtualization","Which is an advantage of OS-based virtualization?","Resource efficiency and portability","Strongest isolation","Needs a full OS per container","Slow deployment","Others: scalability, easy management, reduced cost, faster deployment."],
+["m","OS-based Virtualization","Which is a disadvantage of OS-based virtualization?","Limited hardware access and dependency issues","Full hardware emulation","One kernel per container","Unlimited isolation","Others: security risk, limited isolation, complexity."],
+["m","OS-based Virtualization","Which host OS service integrates with Active Directory?","Directory services integration","Backup and recovery","Memory ballooning","Live migration","Host OS integrates with directory services for central user/group management."],
+["m","OS-based Virtualization","A traditional VM architecture consists of hardware, host OS, hypervisor and:","VMs each running a full OS","Containers only","A shared kernel only","No guest","Each VM runs its own full OS, so resource usage is higher."],
+["h","OS-based Virtualization","Where does the overhead in OS-based virtualization come from?","Kernel-level isolation (namespaces and cgroups)","Full hardware emulation","Binary translation","Double paging","Much smaller than full virtualization overhead."],
+
+/* ---- Operating systems basics (OS & Windows slides + GFG) ---- */
+["e","OS Basics","An operating system is:","The most important program that manages all other programs on the computer","A type of hardware","A web browser","A printer driver","It is the first thing loaded."],
+["e","OS Basics","An OS acts as an interface between:","The user and the hardware","Two monitors","The CPU and the cable","The internet and the router","GFG: an OS manages hardware and software resources and acts as the interface."],
+["e","OS Basics","Which is NOT a basic task of an OS?","Compiling every program","Recognizing keyboard/mouse input","Sending output to the monitor","Keeping track of files and directories","Basic tasks also include controlling peripherals like disks and printers."],
+["e","OS Basics","Core functions of an OS include:","Process, memory and file management","Only printing","Only networking","Only graphics","GFG lists process management, memory management and file management."],
+["e","OS Basics","Which of these is an operating system?","Linux","Excel","Chrome","Photoshop","Examples: Linux, Unix, Windows 11, MS-DOS, Android, macOS, iOS."],
+["e","OS Types","An OS that lets one user effectively do one thing at a time is:","Single-user, single-task","Multi-user, multi-task","Real-time","Single-user, multi-tasking","The slides list four OS types."],
+["e","OS Types","An OS allowing two or more users to run programs at the same time is:","Multi-user, multi-task","Single-user, single-task","Real-time OS","Embedded OS","Some systems support hundreds or thousands of concurrent users."],
+["m","OS Types","A real-time OS (RTOS) is typically used to control:","Machinery, scientific instruments and industrial systems","Word documents","Games only","Web pages","It has little UI capability and executes an operation precisely the same every time."],
+["e","OS Types","Windows and macOS are examples of:","Single-user, multi-tasking OSes","Real-time OSes","Single-user, single-task OSes","Multi-user mainframe OSes only","Most desktops and laptops use this type."],
+["m","OS Basics","An application written for one OS:","Must be written to run on that particular OS","Runs on every OS","Needs no OS","Runs only on RTOS","Your choice of OS determines which application software you can run."],
+["m","OS Memory","In OS memory management, each process must:","Have enough memory to execute and not run into another process's memory space","Use all available memory","Share all memory","Not use memory","Memory protection."],
+["e","Windows GUI","GUI stands for:","Graphical User Interface","General User Input","Global Unit Interface","Graphic Utility Index","Windows and Mac are GUIs."],
+["e","Windows GUI","A small picture representing a command, object, file or window is a(n):","Icon","Pointer","Menu","Taskbar","Icons are movable around the screen."],
+["e","Windows GUI","The taskbar shows:","Windows or programs currently open on the desktop","Deleted files","Network computers","System clock only","You can switch windows by clicking on their button."],
+["m","Windows GUI","The system tray shows:","Programs started automatically by the OS, like antivirus, the clock and volume controls","All open windows","The Start menu","Deleted files","Those programs run in the background."],
+["e","Windows GUI","Deleted files and folders first go to the:","Recycle Bin","My Documents","Network Neighborhood","Taskbar","The Recycle Bin is temporary storage on the hard drive."],
+["m","Windows GUI","In a menu, an item followed by three dots (...) means:","A dialog box will open","Another menu cascades","The feature is toggled on","The item is disabled","Arrow = cascading menu, checkmark = toggle."],
+["m","Windows GUI","In a menu, an arrow next to an item means:","Another menu will cascade from it","A dialog box opens","The item is checked","The item is deleted","The three dots open a dialog box."],
+["e","Windows GUI","The three buttons at the upper right of a window are:","Minimize, maximize/restore and close","Open, save and print","Copy, cut and paste","Back, forward and home","The first hides the window, the second fills the screen, the last closes it."],
+["e","Windows GUI","The bar at the bottom of a window showing messages and the application status is the:","Status bar","Title bar","Menu bar","Scroll bar","The title bar is at the top and holds the title."],
+["m","Windows GUI","Windows Explorer differs from Internet Explorer because it:","Explores things inside your own computer","Explores the Internet","Is a browser","Is a search engine","Internet Explorer explores things outside the computer."],
+["m","Windows GUI","Network Neighborhood allows you to:","See other PCs on your network and share files and printers","Delete files","Change the wallpaper","Run antivirus","It is a window into network resources."],
+["m","Windows GUI","You can move a window by:","Clicking and dragging its title bar","Pressing delete","Closing it","Clicking the status bar","This is called drag and drop."]
+];
+const VSM = VSM_ALL.map(r => r.slice(0, 7));
+const VSM_EXPL = VSM_ALL.map(r => r[7]);
 
 const OS = [
 ["e", "Basics", "An operating system is best described as:", "System software that manages hardware and software resources and provides common services to programs", "A program that only edits documents", "A type of computer hardware", "A web browser plug-in"],
@@ -3041,7 +3243,8 @@ const SUBJECTS = [
      and set pdf to its file name, e.g.  pdf:"introduction-to-management.pdf"  */
   {id:"s1", name:"Introduction to Management", questions: MGMT, explanations: EXPL, pdf:"introduction-to-management.pdf"},
   {id:"s2", name:"System and Network Administration", questions: SNA, explanations: SNA_EXPL, pdf:"system-and-network-administration.pdf"},
-  {id:"s3", name:"Virtual System & Services", questions: VSS, explanations: VSS_EXPL, pdf:"virtual-system-and-services.pdf"},
+  {id:"s3", name:"Virtual System & Services", questions: VSM, explanations: VSM_EXPL, pdf:"virtual-system-and-services.pdf",
+    sections:[{name:"Slides & Web Material MCQs", questions:VSM, explanations:VSM_EXPL},{name:"Sir Notes MCQs", questions:VSS, explanations:VSS_EXPL}]},
   {id:"s4", name:"Operating System", questions: OS, explanations: OS_EXPL, pdf:"",
     sections:[{name:"Slides MCQs", questions:OS, explanations:OS_EXPL},{name:"Mateen Notes MCQs", questions:MAT, explanations:MAT_EXPL}],
     files:[["Week 1 – Intro","OS_Week1.pptx"],["Week 2 – Structure & System Calls","OS_Week2_Structure_SystemCalls_Slides.pptx"],["Week 3 – Processes","OS_Week3_Processes_Slides.pptx"],["Week 4 – Threads","OS_Week4_Threads_Slides.pptx"],["Week 5 – CPU Scheduling","OS_Week5_CPU_Scheduling_Slides.pptx"],["Week 6 – Synchronization","OS_Week6_Process_Synchronization_Slides.pptx"],["Mateen Notes (PDF)","OS_Mateen_Notes.pdf"]]},
@@ -3081,10 +3284,11 @@ function showHome(){
   app.appendChild(el("p","sub","Choose a subject to start practicing."));
   const grid = el("div","grid");
   SUBJECTS.forEach((s,i)=>{
-    const b = el("button","subject"+(s.questions.length?"":" empty"));
+    const b = el("button","subject"+((s.sections?s.sections.some(c=>c.questions.length):s.questions.length)?"":" empty"));
     b.appendChild(el("span","num","Subject "+(i+1)));
     b.appendChild(el("h3",null,s.name));
-    b.appendChild(el("p",null,s.questions.length ? s.questions.length+" questions · Easy, Medium, Hard" : "No MCQs added yet"));
+    const tot = s.sections ? s.sections.reduce((a,c)=>a+c.questions.length,0) : s.questions.length;
+    b.appendChild(el("p",null,tot ? tot+" questions · Easy, Medium, Hard"+(s.sections?" · "+s.sections.length+" sections":"") : "No MCQs added yet"));
     b.onclick = ()=>openSubject(s.id);
     grid.appendChild(b);
   });
