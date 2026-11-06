@@ -76,7 +76,12 @@ select{border-radius:10px}
 .emptybox{text-align:center;padding:50px 20px;color:var(--muted)}
 .result{text-align:center;font-size:1.1rem}
 .hidden{display:none}
+
+:root[data-theme="light"]{--bg:#f5f6fb;--card:#fff;--text:#1d2030;--muted:#6b7089;--line:#e3e6f0;--accent:#4f46e5;--accent-soft:#eceafd;--ok:#15803d;--ok-bg:#e7f7ec;--bad:#b91c1c;--bad-bg:#fdecec;--easy:#15803d;--medium:#b45309;--hard:#b91c1c;--warn-bg:#fff4d6;--warn-text:#7a4b00;--warn-line:#f0d58a}
+:root[data-theme="dark"]{--bg:#000;--card:#0d0d12;--text:#eceefa;--muted:#9aa0bd;--line:#26283a;--accent:#8b86ff;--accent-soft:#1c1a3d;--ok:#4ade80;--ok-bg:#0c2416;--bad:#f87171;--bad-bg:#2a1012;--easy:#4ade80;--medium:#fbbf24;--hard:#f87171;--warn-bg:#2a2009;--warn-text:#fbd98a;--warn-line:#4a3a14}
+.theme-btn{position:fixed;right:14px;bottom:14px;z-index:50;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:99px;padding:9px 16px;font:inherit;font-size:.9rem;font-weight:600;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25)}
 </style>
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 </head>
 <body>
 <div class="credit"><span>Study notes by <b>Abdul Mateen</b></span><i></i><span>With sincere appreciation</span></div>
@@ -3510,6 +3515,16 @@ function updateStats(list){
 /* start */
 const hash = location.hash.replace("#","");
 if(hash && SUBJECTS.some(s=>s.id===hash)) openSubject(hash); else showHome();
+
+/* ---------- THEME TOGGLE ---------- */
+(function(){
+  const root=document.documentElement;
+  const btn=document.createElement("button");btn.className="theme-btn";
+  function cur(){return root.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");}
+  function paint(){btn.textContent=cur()==="dark"?"☀️ Day mode":"🌙 Night mode";}
+  btn.onclick=function(){const n=cur()==="dark"?"light":"dark";root.setAttribute("data-theme",n);try{localStorage.setItem("theme",n)}catch(e){}paint();};
+  paint();document.body.appendChild(btn);
+})();
 </script>
 </body>
 </html>
